@@ -3,10 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 
 function ViewClass() {
     const [classes, setClasses] = useState([]);
+    const [search, setSearch] = useState('');
     const { classID } = useParams();
 
-    useEffect(() => {
-        fetch(`/api/classes/${classID}`)
+    const fetchNotes = async () => {
+        try{
+            fetch(`/api/classes/${classID}`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
@@ -16,12 +18,51 @@ function ViewClass() {
                 }
             })
             .catch(err => console.log(err));
+        }
+        catch (error) {
+            setError('Failed to fetch classes');
+        }
+    }
+
+    useEffect(() => {
+        fetchNotes();
     }, [classID]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
     };
+
+    const deleteNote = async (noteID) => {
+        try{
+            const response = await fetch(`/api/deleteNote/${noteID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ noteID }),
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+            fetchNotes();
+        }
+        catch (error) {
+            setError(error);
+        }
+    }
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value.toLowerCase());
+    };
+
+    const filteredNotes = classes.map(classItem => {
+        return {
+            ...classItem,
+            notes: classItem.notes.filter(currNote => currNote.title.toLowerCase().includes(search))
+        };
+    });
 
     return (
         <div className="min-h-screen bg-white">
@@ -39,11 +80,13 @@ function ViewClass() {
                     <input 
                         className="bg-transparent p-2 w-full focus:outline-none" 
                         type="text" 
-                        placeholder="Search For Classes"
+                        placeholder="Search For Notes"
+                        value={search}
+                        onChange={handleSearchChange}
                     />
                 </div>
                 <div className="mt-6">
-                    {classes.map(classItem => (
+                    {filteredClasses.map(classItem => (
                         <div key={classItem._id}>
                             <h2 className="text-2xl font-semibold">{classItem.className}</h2>
                             <ul>
@@ -53,7 +96,7 @@ function ViewClass() {
                                         <div>
                                         <Link to={`/classNotes/${currNote._id}`} className="bg-purple-200 text-purple-700 px-3 py-1 rounded mx-1">Open</Link>
                                         <Link to={`/classNotes/${currNote._id}/edit`} className="bg-green-200 text-green-700 px-3 py-1 rounded mx-1">Edit</Link>
-                                        <Link to={`/classNotes/delete/${currNote._id}`} className="bg-red-200 text-red-700 px-3 py-1 rounded mx-1">Delete</Link>
+                                        <Link onClick={() => deleteNote(currNote._id)} className="bg-red-200 text-red-700 px-3 py-1 rounded mx-1">Delete</Link>
                                         </div>
                                     </div>
                                 ))}

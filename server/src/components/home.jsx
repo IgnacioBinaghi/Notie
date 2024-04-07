@@ -1,3 +1,4 @@
+import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -5,15 +6,8 @@ function Home() {
 
     const [classes, setClasses] = useState([{}])
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        fetch('/api').then(
-            res => res.json()).then(
-                data => {
-                    setClasses(data)
-                }
-            ).catch(err => console.log(err));
-    }, []);
+    const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -29,6 +23,8 @@ function Home() {
             console.log(err);
             setError('Failed to fetch classes');
         }
+
+        setLoading(false);
     }
     
     useEffect(() => {
@@ -53,9 +49,18 @@ function Home() {
         } catch (err) {
             setError(error);
         }
-
     }
 
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+    };
+    
+
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white">
@@ -74,12 +79,14 @@ function Home() {
                         className="bg-transparent p-2 w-full focus:outline-none" 
                         type="text" 
                         placeholder="Search For Classes"
+                        value={search}
+                        onChange={handleSearchChange}
                     />
                 </div>
                 <div className="mt-6">
                     <h2 className="text-purple-700 font-semibold">Your Notes</h2>
                     <div className="mt-2">
-                        {classes.map((myClass, index) => {
+                        {classes.filter(myClass => myClass.className.toLowerCase().includes(search.toLowerCase())).map((myClass, index) => {
                             if (myClass.className === 'Personal Notes') {
                                 return (
                                 <div key={index} className="flex items-center justify-between p-4 bg-gray-200 rounded my-2">

@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
+import path from 'path';
 
 const app = express();
 
@@ -19,6 +20,10 @@ const Note = mongoose.model("Note")
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bodyParser.json());
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, 'dist/client')));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -134,9 +139,28 @@ app.post('/api/deleteClass/:classID', async (req, res) => {
 })
 
 app.post('/api/deleteNote/:noteID', async (req, res) => {
-    const { noteID } = req.params.noteID;
-    const currNote = await Note;
-})
+    try {
+        const { noteID } = req.params;
+        const currNote = await Note.findById(noteID);
+
+        if (!currNote) {
+            return res.status(404).json('Note not found');
+        }
+
+        const currClass = await Class.findOne({ notes: currNote._id });
+
+        if (currClass) {
+            currClass.notes = currClass.notes.filter(note => note.toString() !== currNote._id.toString());
+            await currClass.save();
+        }
+
+        await currNote.deleteOne();
+        return res.json('Note deleted successfully');
+    } catch (error) {
+        return res.status(500).json('Error deleting note');
+    }
+});
+
 
 
 // Session checking
@@ -146,6 +170,10 @@ app.get('/api/auth/status', (req, res) => {
     } else {
         return res.send({ isAuthenticated: false });
     }
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'client', 'index.html'));
 });
   
 
