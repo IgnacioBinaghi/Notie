@@ -29,22 +29,18 @@ function ViewClass() {
     }, [classID]);
 
     const handleLogout = () => {
-        fetch('https://notie.onrender.com/api/logout', {
-            method: 'POST',
-            credentials: 'include',
-        })
-            .then(() => {
-                navigate('/login');
-            })
-            .catch(err => console.log(err));
+        localStorage.removeItem('token');
+        window.location.href = '/login';
     };
 
     const deleteNote = async (noteID) => {
         try{
+            const token = localStorage.getItem('token');
             const response = await fetch(`https://notie.onrender.com/api/deleteNote/${noteID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : ''
                 },
                 body: JSON.stringify({ noteID }),
             });

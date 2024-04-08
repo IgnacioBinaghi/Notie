@@ -9,19 +9,20 @@ function Home() {
     const [loading, setLoading] = useState(true);
 
     const handleLogout = () => {
-        fetch('https://notie.onrender.com/api/logout', {
-            method: 'POST',
-            credentials: 'include',
-        })
-            .then(() => {
-                navigate('/login');
-            })
-            .catch(err => console.log(err));
+        localStorage.removeItem('token');
+        window.location.href = '/login';
     };
 
     const fetchClasses = async () => {
         try {
-            const response = await fetch('https://notie.onrender.com/api');
+            const token = localStorage.getItem('token');
+            const response = await fetch('https://notie.onrender.com/api', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : ''
+                }
+            })
             const data = await response.json();
             setClasses(data);
         } catch (err) {

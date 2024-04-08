@@ -7,7 +7,14 @@ function Note() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`https://notie.onrender.com/api/classNotes/${noteID}`)
+        const token = localStorage.getItem('token');
+        fetch(`https://notie.onrender.com/api/classNotes/${noteID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token ? `Bearer ${token}` : ''
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setNoteData(data);
@@ -16,14 +23,8 @@ function Note() {
     }, [noteID]);
 
     const handleLogout = () => {
-        fetch('https://notie.onrender.com/api/logout', {
-            method: 'POST',
-            credentials: 'include',
-        })
-            .then(() => {
-                navigate('/login');
-            })
-            .catch(err => console.log(err));
+        localStorage.removeItem('token');
+        window.location.href = '/login';
     };
 
     const handleGoBack = () => {

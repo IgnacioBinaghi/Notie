@@ -16,14 +16,15 @@ function Login() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
-                credentials: 'include'
             });
     
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.error);
             }
-            
+
+            const { token } = await response.json();
+            localStorage.setItem('token', token);
             navigate('/');
         }
         catch (err) {

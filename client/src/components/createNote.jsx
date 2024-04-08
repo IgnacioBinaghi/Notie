@@ -12,10 +12,12 @@ function CreateNote() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch('https://notie.onrender.com/api/CreateNote', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : ''
                 },
                 body: JSON.stringify({ noteName, noteContent, classID}),
                 credentials: 'include'
