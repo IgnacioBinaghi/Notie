@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, Redirect } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function ViewClass() {
     const [classes, setClasses] = useState([]);

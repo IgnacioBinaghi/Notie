@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate, Redirect } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function Note() {
     const [noteData, setNoteData] = useState(null); // Initialize noteData as null
