@@ -11,7 +11,8 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/app.jsx --outDir dist/server",
-    "preview": "cross-env NODE_ENV=production node server"
+    "preview": "cross-env NODE_ENV=production node server",
+    "render-postbuild": "npm install --prefix frontend --production=false && cd /opt/render/project/src/frontend && npm run build"
   },
   "keywords": [],
   "author": "",
