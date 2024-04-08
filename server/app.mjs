@@ -85,19 +85,13 @@ const verifyToken = (req, res, next) => {
             return res.status(401).json({ error: 'Failed to authenticate token' });
         }
 
-        req.userId = decoded.userId;
+        req.user = decoded.userId;
         next();
     });
 };
 
-
-app.post('/api/logout', (req, res) => {
-    req.session.destroy();
-    res.json('User logged out successfully');
-})
-
 app.get('/api', verifyToken, async (req, res) => {
-    const currUser = await User.findById(req.session.userId);
+    const currUser = await User.findById(req.user);
     const classData = await Class.find({user: currUser._id})
     return res.json(classData)
 })
@@ -117,7 +111,7 @@ app.get('/api/classNotes/:noteID', verifyToken, async (req, res) => {
 app.post('/api/createClass', verifyToken, async (req, res) => {
     const {className} = req.body;
 
-    const currUser = await User.findById(req.session.userId);
+    const currUser = await User.findById(req.user);
     const newClass = new Class({user: currUser, className: className});
     currUser.classes.push(newClass);
 
@@ -129,7 +123,7 @@ app.post('/api/createClass', verifyToken, async (req, res) => {
 app.post('/api/createNote', verifyToken, async (req, res) => {
     const {noteName, noteContent, classID} = req.body;
 
-    const currUser = await User.findById(req.session.userId);
+    const currUser = await User.findById(req.user);
     const currClass = await Class.findOne({user: currUser, _id: classID});
     const newNote = new Note({user: currUser, title: noteName, content: noteContent});
     currClass.notes.push(newNote);
@@ -143,7 +137,7 @@ app.post('/api/deleteClass/:classID', verifyToken, async (req, res) => {
     try{
         const classToRemove = await Class.findById(req.params.classID);
 
-        const currUser = await User.findById(req.session.userId);
+        const currUser = await User.findById(req.user);
         currUser.classes = currUser.classes.filter(classItem => classItem._id !== classToRemove._id);
         await currUser.save();
 
