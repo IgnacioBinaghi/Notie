@@ -17,11 +17,11 @@ function Home() {
         window.location.href = '/login';
     };
 
-    console.log(isAuthenticated)
-    
-    if (!isAuthenticated) {
-        return navigate('/login');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
     const fetchClasses = async () => {
         try {

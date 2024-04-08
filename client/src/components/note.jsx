@@ -8,9 +8,11 @@ function Note() {
     const isAuthenticated = localStorage.getItem('token');
 
 
-    if (!isAuthenticated) {
-        return navigate('/login');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
 
     useEffect(() => {

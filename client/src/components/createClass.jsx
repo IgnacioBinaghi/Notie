@@ -10,9 +10,11 @@ function CreateClass() {
     const isAuthenticated = localStorage.getItem('token');
     
 
-    if (!isAuthenticated) {
-        return navigate('/login');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

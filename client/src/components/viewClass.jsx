@@ -35,9 +35,11 @@ function ViewClass() {
         window.location.href = '/login';
     };
 
-    if (!isAuthenticated) {
-        return navigate('/login');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
     const deleteNote = async (noteID) => {
         try{

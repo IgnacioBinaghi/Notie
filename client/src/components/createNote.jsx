@@ -38,9 +38,11 @@ function CreateNote() {
     
     };
 
-    if (!isAuthenticated) {
-        return navigate('/login');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleGoBack = () => {
         navigate(-1);
