@@ -6,7 +6,6 @@ import ViewClass from "./components/viewClass"
 import Note from "./components/note"
 import Login from "./components/login"
 import Register from "./components/register"
-import IsAuthenticated from "./components/isAuthenticated"
 import CreateClass from "./components/createClass"
 import CreateNote from "./components/createNote"
 
@@ -17,12 +16,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<IsAuthenticated><Navigate to="/home" /></IsAuthenticated>} />
-          <Route path="/home" element={<IsAuthenticated><Home /></IsAuthenticated>} />
-          <Route path="/classes/:classID" element={<IsAuthenticated><ViewClass /></IsAuthenticated>} />
-          <Route path="/classNotes/:noteID" element={<IsAuthenticated><Note /></IsAuthenticated>} />
-          <Route path="/createClass" element={<IsAuthenticated><CreateClass /></IsAuthenticated>} />
-          <Route path="/createNote/:classID" element={<IsAuthenticated><CreateNote /></IsAuthenticated>} />
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/classes/:classID" element={<ViewClass />} />
+          <Route path="/classNotes/:noteID" element={<Note />} />
+          <Route path="/createClass" element={<CreateClass />} />
+          <Route path="/createNote/:classID" element={<CreateNote />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </Router>
