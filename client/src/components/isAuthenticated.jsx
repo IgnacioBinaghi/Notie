@@ -27,6 +27,9 @@ const useAuthStatus = () => {
 
 function IsAuthenticated({ children }) {
     const { isAuthenticated, loading } = useAuthStatus();
+
+    console.log(isAuthenticated);
+    
     if (loading) {
         return <div>Loading...</div>; // Or any loading indicator
     }
