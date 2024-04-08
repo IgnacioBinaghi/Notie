@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function CreateClass() {
     const [className, setClassName] = useState();
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const isAuthenticated = localStorage.getItem('token');
+    
+
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
+            const userId = jwtDecode(token).userId
             const response = await fetch('https://notie.onrender.com/api/createClass', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token ? `Bearer ${token}` : ''
                 },
-                body: JSON.stringify({ className }),
+                body: JSON.stringify({ userId, className }),
                 credentials: 'include'
             });
 

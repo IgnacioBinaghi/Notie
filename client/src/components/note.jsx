@@ -5,6 +5,13 @@ function Note() {
     const [noteData, setNoteData] = useState(null); // Initialize noteData as null
     const { noteID } = useParams();
     const navigate = useNavigate();
+    const isAuthenticated = localStorage.getItem('token');
+
+
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');

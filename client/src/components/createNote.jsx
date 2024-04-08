@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function CreateNote() {
     const [noteName, setNoteName] = useState();
@@ -8,18 +9,20 @@ function CreateNote() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { classID } = useParams();
+    const isAuthenticated = localStorage.getItem('token');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
+            const userId = jwtDecode(token).userId
             const response = await fetch('https://notie.onrender.com/api/CreateNote', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token ? `Bearer ${token}` : ''
                 },
-                body: JSON.stringify({ noteName, noteContent, classID}),
+                body: JSON.stringify({ noteName, noteContent, classID, userId}),
                 credentials: 'include'
             });
 
@@ -34,6 +37,10 @@ function CreateNote() {
         }
     
     };
+
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
 
     const handleGoBack = () => {
         navigate(-1);

@@ -5,6 +5,7 @@ function ViewClass() {
     const [classes, setClasses] = useState([]);
     const [search, setSearch] = useState('');
     const { classID } = useParams();
+    const isAuthenticated = localStorage.getItem('token');
 
     const fetchNotes = async () => {
         try{
@@ -32,6 +33,10 @@ function ViewClass() {
         localStorage.removeItem('token');
         window.location.href = '/login';
     };
+
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
 
     const deleteNote = async (noteID) => {
         try{

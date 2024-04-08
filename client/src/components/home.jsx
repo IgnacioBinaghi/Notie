@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function Home() {
 
@@ -7,21 +8,28 @@ function Home() {
     const [error, setError] = useState('');
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
+    const isAuthenticated = localStorage.getItem('token');
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
     };
 
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
+
     const fetchClasses = async () => {
         try {
             const token = localStorage.getItem('token');
+            const userId = jwtDecode(token).userId
             const response = await fetch('https://notie.onrender.com/api', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token ? `Bearer ${token}` : ''
-                }
+                },
+                body: JSON.stringify({ userId })
             })
             const data = await response.json();
             setClasses(data);
@@ -39,12 +47,14 @@ function Home() {
 
     const deleteClass = async (class_id) => {
         try{
+            const token = localStorage.getItem('token');
+            const userId = jwtDecode(token).userId
             const response = await fetch(`https://notie.onrender.com/api/deleteClass/${class_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ class_id }),
+                body: JSON.stringify({ class_id, userId }),
             });
             if (!response.ok) {
                 const errorData = await response.json();
