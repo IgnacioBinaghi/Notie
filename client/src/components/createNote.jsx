@@ -12,7 +12,7 @@ function CreateNote() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/CreateNote', {
+            const response = await fetch('https://notie.onrender.com/api/CreateNote', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

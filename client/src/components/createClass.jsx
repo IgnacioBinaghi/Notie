@@ -9,7 +9,7 @@ function CreateClass() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/createClass', {
+            const response = await fetch('https://notie.onrender.com/api/createClass', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

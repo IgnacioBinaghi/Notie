@@ -8,7 +8,7 @@ function ViewClass() {
 
     const fetchNotes = async () => {
         try{
-            fetch(`/api/classes/${classID}`)
+            fetch(`https://notie.onrender.com/api/classes/${classID}`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
@@ -35,7 +35,7 @@ function ViewClass() {
 
     const deleteNote = async (noteID) => {
         try{
-            const response = await fetch(`/api/deleteNote/${noteID}`, {
+            const response = await fetch(`https://notie.onrender.com/api/deleteNote/${noteID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

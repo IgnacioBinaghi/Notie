@@ -9,7 +9,7 @@ const useAuthStatus = () => {
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                const response = await axios.get('/api/auth/status'); // Replace with your actual endpoint
+                const response = await axios.get('https://notie.onrender.com/api/auth/status'); // Replace with your actual endpoint
                 console.log(response);
                 setIsAuthenticated(response.data.isAuthenticated);
             } catch (error) {

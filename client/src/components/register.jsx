@@ -10,7 +10,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const response = await fetch('/api/register', {
+        const response = await fetch('https://notie.onrender.com/api/register', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

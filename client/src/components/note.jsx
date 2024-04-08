@@ -7,7 +7,7 @@ function Note() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`/api/classNotes/${noteID}`)
+        fetch(`https://notie.onrender.com/api/classNotes/${noteID}`)
             .then(res => res.json())
             .then(data => {
                 setNoteData(data);

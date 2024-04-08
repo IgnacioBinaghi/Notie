@@ -15,7 +15,7 @@ function Home() {
 
     const fetchClasses = async () => {
         try {
-            const response = await fetch('/api');
+            const response = await fetch('https://notie.onrender.com/api');
             const data = await response.json();
             setClasses(data);
         } catch (err) {
@@ -32,7 +32,7 @@ function Home() {
 
     const deleteClass = async (class_id) => {
         try{
-            const response = await fetch(`/api/deleteClass/${class_id}`, {
+            const response = await fetch(`https://notie.onrender.com/api/deleteClass/${class_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
