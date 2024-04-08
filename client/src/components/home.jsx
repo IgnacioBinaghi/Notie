@@ -17,6 +17,8 @@ function Home() {
         window.location.href = '/login';
     };
 
+    console.log(isAuthenticated)
+    
     if (!isAuthenticated) {
         return navigate('/login');
     }

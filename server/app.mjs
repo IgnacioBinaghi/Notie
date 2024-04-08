@@ -92,9 +92,9 @@ app.get('/api/classNotes/:noteID', async (req, res) => {
 });
 
 app.post('/api/createClass', async (req, res) => {
-    const {className} = req.body.className;
+    const { userId, className } = req.body;
 
-    const currUser = await User.findById(req.body.userId);
+    const currUser = await User.findById(userId);
     const newClass = new Class({user: currUser, className: className});
     currUser.classes.push(newClass);
 
