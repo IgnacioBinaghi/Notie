@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function ViewClass() {
     const [classes, setClasses] = useState([]);
     const [search, setSearch] = useState('');
     const { classID } = useParams();
     const isAuthenticated = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const fetchNotes = async () => {
         try{
@@ -36,7 +36,7 @@ function ViewClass() {
     };
 
     if (!isAuthenticated) {
-        return <Redirect to="/login" />;
+        return navigate('/login');
     }
 
     const deleteNote = async (noteID) => {

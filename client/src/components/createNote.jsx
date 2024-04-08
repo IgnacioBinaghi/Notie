@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 function CreateNote() {
@@ -11,7 +10,6 @@ function CreateNote() {
     const navigate = useNavigate();
     const { classID } = useParams();
     const isAuthenticated = localStorage.getItem('token');
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,7 +39,7 @@ function CreateNote() {
     };
 
     if (!isAuthenticated) {
-        return <Redirect to="/login" />;
+        return navigate('/login');
     }
 
     const handleGoBack = () => {

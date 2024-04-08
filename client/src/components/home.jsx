@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { Redirect } from 'react-router-dom';
 
 
 function Home() {
@@ -11,6 +10,7 @@ function Home() {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
     const isAuthenticated = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -18,7 +18,7 @@ function Home() {
     };
 
     if (!isAuthenticated) {
-        return <Redirect to="/login" />;
+        return navigate('/login');
     }
 
     const fetchClasses = async () => {

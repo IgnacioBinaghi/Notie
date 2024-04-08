@@ -11,7 +11,7 @@ function CreateClass() {
     
 
     if (!isAuthenticated) {
-        return <Redirect to="/login" />;
+        return navigate('/login');
     }
 
     const handleSubmit = async (e) => {

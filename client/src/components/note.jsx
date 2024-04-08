@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 
 function Note() {
     const [noteData, setNoteData] = useState(null); // Initialize noteData as null
@@ -10,7 +9,7 @@ function Note() {
 
 
     if (!isAuthenticated) {
-        return <Redirect to="/login" />;
+        return navigate('/login');
     }
 
 
