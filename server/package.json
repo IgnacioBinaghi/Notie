@@ -4,15 +4,8 @@
   "description": "## Overview",
   "main": "app.mjs",
   "scripts": {
-    "test": "jest",
     "start": "node app.mjs",
-    "server": "nodemon app.mjs",
-    "dev": "concurrently \"npm run server\" \"vite\"",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr src/app.jsx --outDir dist/server",
-    "preview": "cross-env NODE_ENV=production node server",
-    "render-postbuild": "npm install --prefix frontend --production=false && cd /opt/render/project/src/frontend && npm run build"
+    "server": "node app.mjs"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +14,9 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
     "jest": "^29.7.0",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3",
+    "concurrently": "^8.2.2",
     "vite": "^5.0.10"
   },
   "dependencies": {
@@ -33,7 +24,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
-    "concurrently": "^8.2.2",
     "express": "^4.19.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^9.0.2",

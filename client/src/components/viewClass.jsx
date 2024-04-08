@@ -86,11 +86,11 @@ function ViewClass() {
                     />
                 </div>
                 <div className="mt-6">
-                    {filteredClasses.map(classItem => (
-                        <div key={classItem._id}>
-                            <h2 className="text-2xl font-semibold">{classItem.className}</h2>
+                    {filteredNotes.map(note => (
+                        <div key={note._id}>
+                            <h2 className="text-2xl font-semibold">{note.className}</h2>
                             <ul>
-                                {classItem.notes.map((currNote, index) => (
+                                {note.notes.map((currNote, index) => (
                                 <div key={index} className="flex items-center justify-between p-4 bg-gray-200 rounded my-2">
                                         <span className="font-medium">{currNote.title || 'No Class Name'}</span>
                                         <div>
