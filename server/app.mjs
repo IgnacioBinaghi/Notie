@@ -167,9 +167,9 @@ app.post('/api/deleteNote/:noteID', async (req, res) => {
 });
 
 
-
 // Session checking
 app.get('/api/auth/status', (req, res) => {
+    console.log(req.session.userId)
     if (req.session.userId) {
         return res.send({ isAuthenticated: true });
     } else {
