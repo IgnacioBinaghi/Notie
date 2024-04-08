@@ -52,6 +52,7 @@ app.post('/api/register', async (req, res) => {
         await personal_notes.save();
         await user.save();
         req.session.userId = user._id;
+        req.session.save();
         res.status(201).json('User created successfully');
     }
     catch (error){
@@ -68,14 +69,14 @@ app.post('/api/login', async (req, res) => {
         }
         if (await bcrypt.compare(password, user.password)){
             req.session.userId = user._id;
-            console.log(req.session.userId)
+            req.session.save();
             res.status(201).json({message: "User logged in successfully"});
         }
         else{
             res.status(400).json({error: "Invalid username or password"});
         }
     }
-    catch (error){
+    catch (error){s
         res.status(500).json({error: error});
     }
 });
