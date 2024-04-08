@@ -81,6 +81,11 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+app.post('/api/logout', (req, res) => {
+    req.session.destroy();
+    res.json('User logged out successfully');
+})
+
 app.get('/api', async (req, res) => {
     const currUser = await User.findById(req.session.userId);
     const classData = await Class.find({user: currUser._id})

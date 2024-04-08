@@ -9,8 +9,14 @@ function Home() {
     const [loading, setLoading] = useState(true);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
+        fetch('https://notie.onrender.com/api/logout', {
+            method: 'POST',
+            credentials: 'include',
+        })
+            .then(() => {
+                navigate('/login');
+            })
+            .catch(err => console.log(err));
     };
 
     const fetchClasses = async () => {
