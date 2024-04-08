@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
 import path from 'path';
+import cors from 'cors';
 
 const app = express();
 
@@ -32,6 +33,10 @@ app.use(session({
     cookie: { secure: 'auto', httpOnly: true, maxAge: 1000 * 60 * 60 * 24}
 }));
 
+app.use(cors({
+    origin: 'https://notie-gamma.vercel.app',
+    credentials: true,
+}));
 
 app.post('/api/register', async (req, res) => {
     try{
@@ -170,10 +175,6 @@ app.get('/api/auth/status', (req, res) => {
     } else {
         return res.send({ isAuthenticated: false });
     }
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'client', 'index.html'));
 });
   
 
