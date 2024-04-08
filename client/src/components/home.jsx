@@ -22,24 +22,25 @@ function Home() {
     const fetchClasses = async () => {
         try {
             const token = localStorage.getItem('token');
-            const userId = jwtDecode(token).userId
-            const response = await fetch('https://notie.onrender.com/api', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token ? `Bearer ${token}` : ''
-                },
-                body: JSON.stringify({ userId })
-            })
-            const data = await response.json();
-            setClasses(data);
+            if (token) { // Check if token exists
+                const userId = jwtDecode(token).userId;
+                const response = await fetch(`https://notie.onrender.com/api/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+                const data = await response.json();
+                setClasses(data);
+            }
         } catch (err) {
             console.log(err);
             setError('Failed to fetch classes');
         }
 
         setLoading(false);
-    }
+    };
     
     useEffect(() => {
         fetchClasses();
@@ -102,7 +103,7 @@ function Home() {
                 <div className="mt-6">
                     <h2 className="text-purple-700 font-semibold">Your Notes</h2>
                     <div className="mt-2">
-                        {classes.filter(myClass => myClass.className.toLowerCase().includes(search.toLowerCase())).map((myClass, index) => {
+                        {classes.filter(myClass => myClass.className && myClass.className.toLowerCase().includes(search.toLowerCase())).map((myClass, index) => {
                             if (myClass.className === 'Personal Notes') {
                                 return (
                                 <div key={index} className="flex items-center justify-between p-4 bg-gray-200 rounded my-2">

@@ -73,8 +73,8 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.get('/api', async (req, res) => {
-    const currUser = await User.findById(req.body.userId);
+app.get('/api/:userId', async (req, res) => {
+    const currUser = await User.findById(req.params.userId);
     const classData = await Class.find({user: currUser._id})
     return res.json(classData)
 })

@@ -65,10 +65,14 @@ function ViewClass() {
     };
 
     const filteredNotes = classes.map(classItem => {
-        return {
-            ...classItem,
-            notes: classItem.notes.filter(currNote => currNote.title.toLowerCase().includes(search))
-        };
+        if (classItem.notes) {
+            return {
+                ...classItem,
+                notes: classItem.notes.filter(currNote => currNote.title.toLowerCase().includes(search))
+            };
+        } else {
+            return classItem;
+        }
     });
 
     return (
