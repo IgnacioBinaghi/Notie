@@ -68,6 +68,7 @@ app.post('/api/login', async (req, res) => {
         }
         if (await bcrypt.compare(password, user.password)){
             req.session.userId = user._id;
+            console.log(req.session.userId)
             res.status(201).json({message: "User logged in successfully"});
         }
         else{

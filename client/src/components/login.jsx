@@ -13,7 +13,7 @@ function Login() {
             const response = await fetch('https://notie.onrender.com/api/login', {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
                 credentials: 'include'

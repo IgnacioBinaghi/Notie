@@ -9,7 +9,7 @@ const useAuthStatus = () => {
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                const response = await axios.get('https://notie.onrender.com/api/auth/status'); // Replace with your actual endpoint
+                const response = await axios.get('https://notie.onrender.com/api/auth/status');
                 console.log(response);
                 setIsAuthenticated(response.data.isAuthenticated);
             } catch (error) {
@@ -29,7 +29,7 @@ function IsAuthenticated({ children }) {
     const { isAuthenticated, loading } = useAuthStatus();
 
     console.log(isAuthenticated);
-    
+
     if (loading) {
         return <div>Loading...</div>; // Or any loading indicator
     }
