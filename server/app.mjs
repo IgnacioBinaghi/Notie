@@ -68,7 +68,7 @@ app.post('/api/login', async (req, res) => {
             res.status(400).json({error: "Invalid username or password"});
         }
     }
-    catch (error){s
+    catch (error){
         res.status(500).json({error: error});
     }
 });
