@@ -10,13 +10,13 @@ function ViewClass() {
 
     const fetchNotes = async () => {
         try{
-            fetch(`https://notie.onrender.com/api/classes/${classID}`)
+            fetch(`${import.meta.env.VITE_FETCH_URL}/api/classes/${classID}`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
                     setClasses(data);
                 } else {
-                    setClasses([data]); // If the response is not an array, convert it to an array with a single element
+                    setClasses([data]);
                 }
             })
             .catch(err => console.log(err));
@@ -44,7 +44,7 @@ function ViewClass() {
     const deleteNote = async (noteID) => {
         try{
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://notie.onrender.com/api/deleteNote/${noteID}`, {
+            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/deleteNote/${noteID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function ViewClass() {
                                         <span className="font-medium">{currNote.title || 'No Class Name'}</span>
                                         <div>
                                         <Link to={`/classNotes/${currNote._id}`} className="bg-purple-200 text-purple-700 px-3 py-1 rounded mx-1">Open</Link>
-                                        <Link to={`/classNotes/${currNote._id}/edit`} className="bg-green-200 text-green-700 px-3 py-1 rounded mx-1">Edit</Link>
+                                        <Link to={`/editNote/${currNote._id}`} className="bg-green-200 text-green-700 px-3 py-1 rounded mx-1">Edit</Link>
                                         <Link onClick={() => deleteNote(currNote._id)} className="bg-red-200 text-red-700 px-3 py-1 rounded mx-1">Delete</Link>
                                         </div>
                                     </div>
