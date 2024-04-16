@@ -20,7 +20,7 @@ function CreateClass() {
         try {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId
-            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/createClass`, {
+            const response = await fetch('https://notie.onrender.com/api/createClass', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

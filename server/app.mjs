@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.static(path.join(__dirname, 'dist/client')));
 
 app.use(cors({
-    origin: process.env.FETCH_URL,
+    origin: 'https://notie-gamma.vercel.app',
     credentials: true,
 }));
 
@@ -102,50 +102,6 @@ app.post('/api/createClass', async (req, res) => {
     await newClass.save();
     return res.json(newClass);
 });
-
-app.get('/api/getClass/:classID', async (req, res) => {
-    try{
-        const classID = req.params.classID;
-        const currClass = await Class.findById(classID);
-        return res.json(currClass);
-    }
-    catch (e) {
-        console.log(e)
-    }
-})
-
-
-app.post('/api/editClass/:classID', async (req, res) => {
-    const classID = req.params.classID;
-
-    const currClass = await Class.findById(classID);
-
-    if (!currClass) {
-        return res.status(404).json('Class not found');
-    }
-
-    currClass.className = req.body.className;
-    await currClass.save();
-
-    return res.json({message: 'Class updated successfully'});
-})
-
-app.post('/api/editNote/:noteID', async (req, res) => {
-    const noteID = req.params.noteID
-
-    const currNote = await Note.findById(noteID);
-
-    if (!currNote) {
-        return res.status(404).json('Note not found');
-    }
-
-    currNote.title = req.body.noteName;
-    currNote.content = req.body.noteContent;
-
-    await currNote.save();
-
-    return res.status(200).json({message: 'Note updated successfully'});
-})
 
 app.post('/api/createNote', async (req, res) => {
     const {noteName, noteContent, classID, userId} = req.body;

@@ -16,7 +16,7 @@ function CreateNote() {
         try {
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId
-            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/CreateNote`, {
+            const response = await fetch('https://notie.onrender.com/api/CreateNote', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
