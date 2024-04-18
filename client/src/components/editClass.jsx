@@ -25,7 +25,7 @@ function editClass(){
         e.preventDefault()
         try{
             const token = localStorage.getItem('token');
-            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/editClass/${classID}`, {
+            const response = await fetch(`https://notie.onrender.com/api/editClass/${classID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ function editClass(){
         const fetchClassData = async () => {
             try{
                 const token = localStorage.getItem('token');
-                const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/getClass/${classID}`, {
+                const response = await fetch(`https://notie.onrender.com/api/getClass/${classID}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ function Note() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch(`${import.meta.env.VITE_FETCH_URL}/api/classNotes/${noteID}`, {
+        fetch(`https://notie.onrender.com/api/classNotes/${noteID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

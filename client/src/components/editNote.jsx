@@ -26,7 +26,7 @@ function editNote(){
         e.preventDefault()
         try{
             const token = localStorage.getItem('token');
-            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/editNote/${noteID}`, {
+            const response = await fetch(`https://notie.onrender.com/api/editNote/${noteID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function editNote(){
         const fetchNoteData = async () => {
             try{
                 const token = localStorage.getItem('token');
-                const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/classNotes/${noteID}`, {
+                const response = await fetch(`https://notie.onrender.com/api/classNotes/${noteID}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

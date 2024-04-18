@@ -29,7 +29,7 @@ function Home() {
             const token = localStorage.getItem('token');
             if (token) { // Check if token exists
                 const userId = jwtDecode(token).userId;
-                const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/${userId}`, {
+                const response = await fetch(`https://notie.onrender.com/api/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function Home() {
         try{
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId
-            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/deleteClass/${class_id}`, {
+            const response = await fetch(`https://notie.onrender.com/api/deleteClass/${class_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
