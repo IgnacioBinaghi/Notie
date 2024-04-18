@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 
+
 function Home() {
 
     const [classes, setClasses] = useState([{}])
@@ -28,7 +29,7 @@ function Home() {
             const token = localStorage.getItem('token');
             if (token) { // Check if token exists
                 const userId = jwtDecode(token).userId;
-                const response = await fetch(`https://notie.onrender.com/api/${userId}`, {
+                const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ function Home() {
         try{
             const token = localStorage.getItem('token');
             const userId = jwtDecode(token).userId
-            const response = await fetch(`https://notie.onrender.com/api/deleteClass/${class_id}`, {
+            const response = await fetch(`${import.meta.env.VITE_FETCH_URL}/api/deleteClass/${class_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ function Home() {
                                 <span className="font-medium">{myClass.className || 'No Class Name'}</span>
                                 <div>
                                 <Link to={`/classes/${myClass._id}`} className="bg-purple-200 text-purple-700 px-3 py-1 rounded mx-1">Open</Link>
-                                <Link to={`/classes/${myClass._id}/edit`} className="bg-green-200 text-green-700 px-3 py-1 rounded mx-1">Edit</Link>
+                                <Link to={`/editClass/${myClass._id}`} className="bg-green-200 text-green-700 px-3 py-1 rounded mx-1">Edit</Link>
                                 <button onClick={() => deleteClass(myClass._id)} className="bg-red-200 text-red-700 px-3 py-1 rounded mx-1">Delete</button>
                                 </div>
                             </div>

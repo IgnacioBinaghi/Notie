@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function Note() {
-    const [noteData, setNoteData] = useState(null); // Initialize noteData as null
+    const [noteData, setNoteData] = useState(null);
     const { noteID } = useParams();
     const navigate = useNavigate();
     const isAuthenticated = localStorage.getItem('token');
@@ -17,7 +17,7 @@ function Note() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch(`https://notie.onrender.com/api/classNotes/${noteID}`, {
+        fetch(`${import.meta.env.VITE_FETCH_URL}/api/classNotes/${noteID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

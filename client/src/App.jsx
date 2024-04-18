@@ -8,6 +8,8 @@ import Login from "./components/login"
 import Register from "./components/register"
 import CreateClass from "./components/createClass"
 import CreateNote from "./components/createNote"
+import EditClass from "./components/editClass"
+import EditNote from "./components/editNote"
 
 function App() {
   return (
@@ -19,9 +21,11 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/classes/:classID" element={<ViewClass />} />
+          <Route path="/editClass/:classID" element={<EditClass />} />
           <Route path="/classNotes/:noteID" element={<Note />} />
           <Route path="/createClass" element={<CreateClass />} />
           <Route path="/createNote/:classID" element={<CreateNote />} />
+          <Route path="/editNote/:noteID" element={<EditNote />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </Router>
